@@ -1,5 +1,6 @@
 from constants import *
 import random
+import pygame
 with open("biblioteca.txt", "r", encoding="utf-8") as arquivo:
     biblioteca = arquivo.read().splitlines()
 fila = []
@@ -7,8 +8,11 @@ historico = []
 atual = "NADA"
 
 
-
-
+def tocar(musica):
+    musica = "musicas/" + musica + ".mp3"
+    pygame.mixer.init()
+    pygame.mixer.music.load(musica)
+    pygamer.mixer.music.play()
 #1
 def ver_biblioteca():
     print("\n--- BIBLIOTECA DE MÚSICAS ---")
@@ -28,7 +32,7 @@ def adicionar_na_fila():
             if biblioteca[num] not in fila:
                 musica_escolhida = biblioteca[num]
                 fila.append(musica_escolhida)
-                print(f"-> '{musica_escolhida}' foi adicionada à fila!")
+                print(f"'{musica_escolhida}' foi adicionada a fila!")
             else:
                 print(ERRO,"Já está na fila!")
         else:
@@ -52,6 +56,7 @@ def tocar_proxima():
     if fila != []:
         atual = fila.pop()
         historico.append(atual)
+        tocar(atual)
     else:
         print(ERRO,"Fila vazia")
 
@@ -81,6 +86,7 @@ def qnt_fila():
 
 #8
 def festa():
+    print("Modo festa! Agora, as musicas estão aleatórias")
     random.shuffle(biblioteca)
     print(LINHA)
     print()
